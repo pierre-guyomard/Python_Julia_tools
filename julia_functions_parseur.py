@@ -25,6 +25,8 @@ class julia_parseur :
 
         self.dict_fonction = dict()
 
+        self.liste_noms = list()
+
         sowil = 0
 
         while sowil <= len(self.fichier) - 1 :
@@ -51,9 +53,7 @@ class julia_parseur :
 
                         temporary_name = temporary_name[1:]
 
-                        #print('')
-
-                        #print(temporary_name)
+                        self.liste_noms.append(temporary_name)
 
                         self.dict_fonction[temporary_name] = 'function' + temp + ' ; '
 
@@ -80,5 +80,13 @@ class julia_parseur :
                 pass
 
             sowil = sowil + 1
+
+    def check(self) :
+
+        for k in self.liste_noms :
+
+            if not self.dict_fonction[k].endswith('end') :
+
+                self.dict_fonction[k] = self.dict_fonction[k] + 'end'
 
         return self.dict_fonction
